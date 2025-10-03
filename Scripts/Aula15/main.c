@@ -13,5 +13,11 @@ int main()
     insereInicio(&lista, 40);
     insereFim(&lista, 5);
     imprimeLista(&lista);
+    No *tmp = busca(&lista, 30);
+    if (removeElemento(&lista, 30))
+    {
+        printf("Removido com Sucesso!\n");
+    }
+    imprimeLista(&lista);
     return 0;
 }
