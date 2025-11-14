@@ -37,12 +37,59 @@ void destruirFila(Fila *f){
 
 
 /* Operações básicas */
-int filaVazia(Fila *f);
-int enfileirar(Fila *f, Pessoa p);        /* insere no fim */
-int desenfileirar(Fila *f, Pessoa *pOut); /* remove do início */
+int filaVazia(Fila *f) {
+    return (f == NULL || f->inicio == NULL);
+}
+int enfileirar(Fila *f, Pessoa p) {        /* insere no fim */
+    if (f == NULL)
+        return;
+    No *novo = (No*)malloc(sizeof(No));
+    if (novo == NULL)
+        return 0;
+    novo->dado = p;
+    novo->prox = NULL;
+    novo->ant = f->fim;
 
+    if (filaVazia(f)) {
+        f->inicio = novo;
+    } else {
+        f->fim->prox = novo;
+    }
+    f->fim = novo;
+    f->tamanho++;
+    return 1;
+}
+int desenfileirar(Fila *f, Pessoa *pOut){ /* remove do início */
+    if (f == NULL || filaVazia(f))
+        return 0;
+    No *rem = f->inicio;
+    if (pOut != NULL) {
+        *pOut = rem->dado;
+    }
+    f->inicio = rem->prox;
+    if (f->inicio != NULL) {
+        f->inicio->ant = NULL;
+    } else {
+        f->fim = NULL;
+    }
+    free(rem);
+    f->tamanho--;
+    return 1;
+}
 /* Utilitários */
-void imprimirFila(Fila *f);
+void imprimirFila(Fila *f) {
+    if (filaVazia(f)) {
+        printf("Fila vazia.\n");
+        return;
+    }
+    No *atual = f->inicio;
+    printf("Tamanho da fila: %d\n", f->tamanho);
+    while (atual != NULL) {
+        printf("Nome: %-20s | Idade: %d\n",
+               atual->dado.nome, atual->dado.idade);
+        atual = atual->prox;
+    }
+}
 
 /* Ordenação por idade: crescente != 0 -> crescente; 0 -> decrescente */
 void ordenarPorIdade(Fila *f, int crescente);
