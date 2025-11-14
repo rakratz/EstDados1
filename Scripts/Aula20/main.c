@@ -2,9 +2,11 @@
 #include "fila.h"
 #include "persistencia.h"
 
-int main(void) {
+int main(void)
+{
     Fila *f = criarFila();
-    if (f == NULL) {
+    if (f == NULL)
+    {
         printf("Erro ao criar fila.\n");
         return 1;
     }
@@ -22,6 +24,9 @@ int main(void) {
     printf("Fila original:\n");
     imprimirFila(f);
 
+    printf("\nSalvando em arquivo 'pessoas.txt'...\n");
+    salvarEmArquivo(f, "pessoas.txt");
+
     printf("\nOrdenando por idade crescente:\n");
     ordenarPorIdade(f, 1);
     imprimirFila(f);
@@ -29,9 +34,6 @@ int main(void) {
     printf("\nOrdenando por idade decrescente:\n");
     ordenarPorIdade(f, 0);
     imprimirFila(f);
-
-    printf("\nSalvando em arquivo 'pessoas.txt'...\n");
-    salvarEmArquivo(f, "pessoas.txt");
 
     printf("Limpando fila e recarregando do arquivo...\n");
     limparFila(f);
